@@ -148,3 +148,49 @@ After creation, we send the respective kubeconfigs to either the master or worke
 ### Sending kubeconfig to master
 ![](./img/6.transfer_kubeconfig_master.jpg)
 
+## PREPARE THE ETCD DATABASE FOR ENCRYPTION AT REST.
+#
+Kubernetes uses etcd (A distributed key value store) to store variety of data which includes the cluster state, application configurations, and secrets. By default, the data that is being persisted to the disk is not encrypted.
+
+![](./img/7.ssh_into_all.jpg)
+![](./img/8.etcd_success.jpg)
+
+## BOOTSTRAP THE CONTROL PLANE
+#
+We will be doing additional installations for our control plane. 
+
+- Configure the Kubernetes API Server
+  
+![](./img/9.kubeAPIserver.jpg)
+
+- Create the kube-apiserver.service systemd unit file
+- Configure the Kubernetes Controller Manager:
+  
+![](./img/10.controller_manager.jpg)
+- Create the kube-controller-manager.service systemd unit file
+- Configure the Kubernetes Scheduler
+- Create the kube-scheduler.service systemd unit file
+  
+### Testing Everything works properly
+
+![](./img/11.success_master_setup.jpg)
+![](./img/12.target_grp_success.jpg)
+
+## CONFIGURING THE KUBERNETES WORKER NODES
+#
+
+The following components will be installed on each node:
+
+kubelet
+kube-proxy
+Containerd or Docker
+Networking plugins
+
+![](./img/13.kube-proxy.jpg)
+![](./img/14.containerd.jpg)
+![](./img/15.%20kubelet.jpg)
+
+
+We run `kubectl get nodes --kubeconfig admin.kubeconfig` to test if our setup works. The ready state shows that our nodes are working properly
+
+![](./img/16.completed.jpg)
