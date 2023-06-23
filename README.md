@@ -95,7 +95,7 @@ The following resources were setup:
 - Target Groups
 - 6 EC2 Instances 3 Master 3 Worker
 
-# [Link to the terraform code ](https://github.com/Micah-Shallom/k8s-tf-network-setup.git)
+# [Link to the terraform code ](https://github.com/Kachi79/k8s-tf-network-setup)
 #
 
 ## PREPARE THE SELF-SIGNED CERTIFICATE AUTHORITY AND GENERATE TLS CERTIFICATES
@@ -125,3 +125,26 @@ Using the CA, we provision TLS certs for the following
 - Kubernetes Admin User
 
 ![](./img/2.certs.jpg)
+
+## Distributing the Client and Server Certificates
+#
+After creating all certifiates, now it is time to start sending all the client and server certificates to their respective instances.
+
+### Sending to Worker Instance Servers
+![](./img/3.worker_transfer.jpg)
+
+### Sending to Master Instance Servers
+![](./img/4.master_transfer.jpg)
+#
+
+## USE `KUBECTL` TO GENERATE KUBERNETES CONFIGURATION FILES FOR AUTHENTICATION
+We will be using Kubectl to generate kubeconfig files for the kubelet, controller manager, kube-proxy, and scheduler clients and then the admin user.
+
+After creation, we send the respective kubeconfigs to either the master or worker nodes
+
+### Sending kubeconfig to worker
+![](./img/5.transfer_kubeconfig_worker.jpg)
+
+### Sending kubeconfig to master
+![](./img/6.transfer_kubeconfig_master.jpg)
+
